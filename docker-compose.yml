@@ -1,0 +1,23 @@
+version: '3'
+services:
+    miniflux:
+        image: miniflux/miniflux:latest
+        ports:
+            - "8080:8080"
+        depends_on:
+            - db
+        environment:
+            - DATABASE_URL=postgres://miniflux:Wang1998@db/miniflux?sslmode=disable
+            - ARCHIVE_READ_DAYS=180
+            - RUN_MIGRATIONS=1
+            - CREATE_ADMIN=1
+            - ADMIN_USERNAME=laurence
+            - ADMIN_PASSWORD=Wang1998
+        restart: always
+    db:
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=miniflux
+            - POSTGRES_PASSWORD=Wang1998
+        volumes:
+            - ./data:/var/lib/postgresql/data
